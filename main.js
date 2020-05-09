@@ -50,6 +50,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 
 
 start.addEventListener('click', () => {
+    let Tong = 0
     console.log("check")
     window.navigator.geolocation.watchPosition(
         data => {
@@ -58,9 +59,10 @@ start.addEventListener('click', () => {
             prePosition.lon = data.coords.longitude
             visualText(data.coords.latitude, data.coords.longitude)
            }else {
-               let dis = distance(prePosition.lat,prePosition.lon,data.coords.latitude,data.coords.longitude)
-               console.log(dis)
-               textDist(dis)
+                visualText(data.coords.latitude, data.coords.longitude)
+               let dis = distance(prePosition.lat,prePosition.lon,data.coords.latitude,data.coords.longitude, "M")
+               Tong += dis
+               textDist(Tong)
                prePosition.lat = data.coords.latitude
                prePosition.lon = data.coords.longitude
            }}, error,options
