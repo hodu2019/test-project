@@ -61,8 +61,8 @@ start.addEventListener('click', () => {
 )
 
 function checkLocation (Tong) {
-    setting = setInterval(() => {
-        window.navigator.geolocation.getCurrentPosition(
+    
+        setting = window.navigator.geolocation.watchPosition(
         data => {
            if(prePosition.lat == null || prePosition.lon == null){
             prePosition.lat = data.coords.latitude
@@ -77,12 +77,12 @@ function checkLocation (Tong) {
                prePosition.lon = data.coords.longitude
            }}, error,options
       )
-   }, 2000) 
+   
 }
 
 stop.addEventListener('click', () => {
     console.log("stop")
-    clearInterval(setting)
+    navigator.geolocation.clearWatch(setting);
     console.log(setting)
     prePosition.lat = null
     prePosition.lon = null
