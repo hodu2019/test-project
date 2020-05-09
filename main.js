@@ -6,6 +6,8 @@ let prePosition = {
     lon : null
 }
 
+var setting
+
 let distanceText = document.getElementById('distance')
 
 function error(err) {
@@ -52,7 +54,15 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 start.addEventListener('click', () => {
     let Tong = 0
     console.log("check")
-    window.navigator.geolocation.watchPosition(
+    checkLocation(Tong)
+}
+ 
+     
+)
+
+function checkLocation (Tong) {
+    setting = setInterval(() => {
+        window.navigator.geolocation.getCurrentPosition(
         data => {
            if(prePosition.lat == null || prePosition.lon == null){
             prePosition.lat = data.coords.latitude
@@ -60,14 +70,22 @@ start.addEventListener('click', () => {
             visualText(data.coords.latitude, data.coords.longitude)
            }else {
                 visualText(data.coords.latitude, data.coords.longitude)
-               let dis = distance(prePosition.lat,prePosition.lon,data.coords.latitude,data.coords.longitude, "M")
+               let dis = distance(prePosition.lat,prePosition.lon,data.coords.latitude,data.coords.longitude, "K")
                Tong += dis
                textDist(Tong)
                prePosition.lat = data.coords.latitude
                prePosition.lon = data.coords.longitude
            }}, error,options
       )
+   }, 2000) 
 }
- 
-     
+
+stop.addEventListener('click', () => {
+    console.log("stop")
+    clearInterval(setting)
+    console.log(setting)
+    prePosition.lat = null
+    prePosition.lon = null
+
+}
 )
